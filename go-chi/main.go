@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"runtime"
 	"strconv"
 
 	"github.com/go-chi/chi/v5"
@@ -58,6 +59,22 @@ func main() {
 
 	initDB(db)
 
+	db.SetMaxOpenConns(runtime.NumCPU())
+	db.SetMaxIdleConns(runtime.NumCPU())
+	db.SetConnMaxLifetime(0)
+
+	listStmt, err := db.Prepare("SELECT id, title, author, year FROM books")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer listStmt.Close()
+
+	getStmt, err := db.Prepare("SELECT id, title, author, year FROM books WHERE id = ?")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer getStmt.Close()
+
 	r := chi.NewRouter()
 
 	r.Get("/api/health", func(w http.ResponseWriter, r *http.Request) {
@@ -65,7 +82,7 @@ func main() {
 	})
 
 	r.Get("/api/books", func(w http.ResponseWriter, r *http.Request) {
-		rows, err := db.Query("SELECT id, title, author, year FROM books")
+		rows, err := listStmt.Query()
 		if err != nil {
 			writeJSON(w, http.StatusInternalServerError, map[string]string{"error": err.Error()})
 			return
@@ -90,7 +107,7 @@ func main() {
 		}
 
 		var b Book
-		err = db.QueryRow("SELECT id, title, author, year FROM books WHERE id = ?", id).
+		err = getStmt.QueryRow(id).
 			Scan(&b.ID, &b.Title, &b.Author, &b.Year)
 		if err == sql.ErrNoRows {
 			writeJSON(w, http.StatusNotFound, map[string]string{"error": "not found"})
