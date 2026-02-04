@@ -1,0 +1,32 @@
+# SQLite runtime files
+books.db
+books.db-shm
+books.db-wal
+
+# Benchmark results
+results/
+
+# Go
+go-chi/server
+
+# Rust
+rust-axum/target/
+
+# Java
+java-quarkus/target/
+java-quarkus/.quarkus/
+*.class
+*.jar
+*.war
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+
+# OS
+.DS_Store
