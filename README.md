@@ -2,6 +2,12 @@
 
 Benchmarks of modern web frameworks.
 
+### Disclaimer
+
+This is a contrived (and poorly made) demo. Results will _obviously_ differ in real world usage.
+
+I would highly recommend Tech Empower's [Web Framework Benchmarks](https://www.techempower.com/benchmarks/#section=data-r23)  if you want more reliable benchmark results.
+
 ### Results 
 
 **Duration:** 10s per endpoint
@@ -31,10 +37,3 @@ Benchmarks of modern web frameworks.
   | GET /api/health | 1.3236 ms | 7.0605 ms | 4.2105 ms | 3.3896 ms | 12.6313 ms |
   | GET /api/books | 2.4998 ms | 6.3534 ms | 6.2153 ms | 13.9007 ms | 15.0192 ms |
   | GET /api/books/3 | 2.4199 ms | 6.4179 ms | 4.6881 ms | 11.5347 ms | 14.9445 ms |
-
-
-### Disclaimer
-
-This is a contrived (and poorly made) demo. Results will _obviously_ differ in real world usage.
-
-I would highly recommend Tech Empower's [Web Framework Benchmarks](https://www.techempower.com/benchmarks/#section=data-r23)  if you want more reliable benchmark results.
